@@ -64,6 +64,50 @@ void quicklySort(int * a,int left , int right){
     quicklySort(a, i+1, right);
 }
 
+//归并排序
+void merge(int sourceArr[],int tempArr[], int startIndex, int midIndex,int endIndex){
+    int i = startIndex;
+    int j = midIndex + 1;
+    int k = startIndex;
+    
+    while (i != midIndex + 1 && j != endIndex + 1) {
+        if (sourceArr[i]>=sourceArr[j]) {
+            tempArr[k++] = sourceArr[j++];
+        }else{
+            tempArr[k++] = sourceArr[i++];
+        }
+    }
+    
+    while (i!=midIndex+1) {
+        tempArr[k++]=sourceArr[i++];
+    }
+    
+    while (j!=endIndex+1) {
+        tempArr[k++]=sourceArr[j++];
+    }
+    
+    for (i = startIndex; i<endIndex; i++) {
+        sourceArr[i] = tempArr[i];
+    }
+}
+
+void mergeSort(int souceArr[], int tempArr[], int startIndex, int endIndex) {
+    
+    int midIndex;
+    
+    if (startIndex < endIndex) {
+        
+        midIndex = (startIndex + endIndex) / 2;
+        
+        mergeSort(souceArr, tempArr, startIndex, midIndex);
+        
+        mergeSort(souceArr, tempArr, midIndex + 1, endIndex);
+        
+        merge(souceArr, tempArr, startIndex, midIndex, endIndex);
+        
+    }
+    
+}
 
 
 int main(int argc, const char * argv[]) {
@@ -72,8 +116,19 @@ int main(int argc, const char * argv[]) {
         NSLog(@"Hello, World!");
         
         
-        int array[] = {1,3,4,2};
-        bubleSort(array, 4);
+        int numArr[10] = {86, 37, 56, 29, 92, 73, 15, 63, 30, 8};
+        
+        int tempArr[10];
+        
+        mergesort(numArr, tempArr, 0, 9);
+        
+        for (int i = 0; i < 10; i++) {
+            
+            printf("%d, ", numArr[i]);
+            
+        }
+        
+        printf("\n");
         
     }
     return 0;
